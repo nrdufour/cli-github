@@ -82,7 +82,12 @@ execute_clone() {
         mirror_option="--mirror"
     fi
     echo "Backing up repo: $userid/$repoid"
-    git clone -q ${mirror_option} https://github.com/${userid}/${repoid}.git
+    if [ -d ${repoid} ]
+    then
+        (cd ${repoid}; git pull)
+    else
+        git clone -q ${mirror_option} https://github.com/${userid}/${repoid}.git
+    fi
     echo "Done"
 }
 
