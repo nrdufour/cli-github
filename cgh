@@ -77,14 +77,18 @@ execute_clone() {
     fi
 
     local mirror_option=""
+    local repository_directory=${repoid}
+    local repository_update_cmd='git pull'
     if [ "$mirrored" == "1" ]
     then
         mirror_option="--mirror"
+        repository_directory=${repoid}.git
+        repository_update_cmd='git remote update'
     fi
     echo "Backing up repo: $userid/$repoid"
-    if [ -d ${repoid} ]
+    if [ -d ${repository_directory} ]
     then
-        (cd ${repoid}; git pull)
+        (cd ${repository_directory}; $repository_update_cmd)
     else
         git clone -q ${mirror_option} https://github.com/${userid}/${repoid}.git
     fi
