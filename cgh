@@ -16,8 +16,8 @@ execute_list() {
         exit 2
     fi
 
-    id_type=$1
-    id_value=$2
+    local id_type=$1
+    local id_value=$2
 
     if [ "$id_type" != "user" -a "$id_type" != "org" ]
     then
@@ -39,7 +39,7 @@ display_usage_list() {
 ###############################################################################
 
 execute_clone() {
-    args=`getopt m $*`
+    local args=`getopt m $*`
 
     if [ $? != 0 ]
     then
@@ -47,7 +47,7 @@ execute_clone() {
         exit 2
     fi
 
-    mirrored=0
+    local mirrored=0
 
     set -- $args
     for i
@@ -66,17 +66,17 @@ execute_clone() {
         exit 2
     fi
 
-    userid=$1
-    repoid=$2
+    local userid=$1
+    local repoid=$2
 
-    check=`check_repo $userid $repoid`
+    local check=`check_repo $userid $repoid`
     if [ "$check" != "200" ]
     then
         echo "The repository $userid/$repoid doesn't exist!"
         exit 2
     fi
 
-    mirror_option=""
+    local mirror_option=""
     if [ "$mirrored" == "1" ]
     then
         mirror_option="--mirror"
@@ -115,8 +115,8 @@ execute_backup() {
         exit 2
     fi
 
-    id_type=$1
-    id_value=$2
+    local id_type=$1
+    local id_value=$2
 
     if [ "$id_type" != "user" -a "$id_type" != "org" ]
     then
@@ -125,7 +125,7 @@ execute_backup() {
         exit 2
     fi
 
-    repo_list=`execute_list $id_type $id_value`
+    local repo_list=`execute_list $id_type $id_value`
 
     for i in $repo_list
     do
